@@ -51,7 +51,7 @@ model Inscription {
   eventId   String
   firstName String
   lastName  String
-  email     String
+  email     String   @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

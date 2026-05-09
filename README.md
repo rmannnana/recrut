@@ -49,6 +49,18 @@ Toutes les routes `/users` nécessitent le header :
 Authorization: Bearer <access_token>
 ```
 
+### Events
+#### _Pour la création, je vais utilisé la DTO pour la validation de données pour éviter les informations invalides._
+#### _Dans le fichier events/dto/create-event.dto.ts_
+
+#### Il faut être ADMIN pour pouvoir créer un évènement (j'ai précisé dans \src\events\events.controller.ts)
+
+| Méthode | Route | Description | Auth requise |
+|---|---|---|---|
+| GET | `/api/events/` | Lister les events | Non |
+| POST | `/api/events/` | Créer un évènements | Non |
+
+
 ---
 
 ## Modèle de données
@@ -105,6 +117,7 @@ Authorization: Bearer <access_token>
 
 #### Après l'ajout des modèles:
 ```bash
+    npx prisma generate
     npx prisma migrate dev --name ajout-event-inscription
 ```
 #### Pour que ce soit pris en compte dans la base de données.
