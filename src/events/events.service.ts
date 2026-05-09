@@ -71,4 +71,9 @@ export class EventsService {
         });
     }
 
+    async remove(id: string) {
+        await this.findOne(id);
+        return this.prisma.event.delete({ where: { id } });
+    }
+
 }
