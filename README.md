@@ -20,11 +20,11 @@ L'application a pour objectif de permettre la publication des évènements et la
 
 ## Endpoints disponibles
 ### _Les endpoint attendus pour le projet seront ajoutés aux endpoints déjà fournis par Kynetic_
-### Mais pour avoir "api" au debut de chaque requête comme demandé dans les consignes, j'ai ajouté la ligne
+#### Mais pour avoir "api" au debut de chaque requête comme demandé dans les consignes, j'ai ajouté la ligne
 ```bash
     app.setGlobalPrefix('api');
 ```
-dans main.ts.
+#### dans main.ts.
 
 ### Authentification
 
@@ -50,8 +50,8 @@ Authorization: Bearer <access_token>
 ```
 
 ### Events
-#### _Pour la création, je vais utilisé la DTO pour la validation de données pour éviter les informations invalides._
-#### _Dans le fichier events/dto/create-event.dto.ts_
+#### _Pour la création et l'update d'évènements, je vais utilisé la DTO pour la validation de données pour éviter les informations invalides._
+#### _Dans les fichier events/dto/create-event.dto.ts_ et _update-event.dto.ts_
 
 #### Il faut être ADMIN pour pouvoir créer un évènement (j'ai précisé dans \src\events\events.controller.ts)
 

@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Query, Body, UseGuards, Param } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, UseGuards, Param, Put } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '@prisma/client';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @Controller('events')
 export class EventsController {
@@ -28,5 +29,12 @@ export class EventsController {
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.eventsService.findOne(id);
+    }
+
+    @Put(':id')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.ADMIN)
+    update(@Param('id') id: string, @Body() dto: UpdateEventDto) {
+        return this.eventsService.update(id, dto);
     }
 }
