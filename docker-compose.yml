@@ -1,16 +1,16 @@
 services:
   postgres:
     image: postgres:16
-    container_name: kynetic_db
+    container_name: recrut_db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: kynetic_user
-      POSTGRES_PASSWORD: kynetic_password
-      POSTGRES_DB: kynetic_db
+      POSTGRES_USER: recrut_user
+      POSTGRES_PASSWORD: UnMotDePasseTrèsSimple
+      POSTGRES_DB: recrut_db
     ports:
       - "5432:5432"
     volumes:
-      - kynetic_pgdata:/var/lib/postgresql/data
+      - recrut_pgdata:/var/lib/postgresql/data
 
 volumes:
-  kynetic_pgdata:
+  recrut_pgdata:

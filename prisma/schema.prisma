@@ -14,14 +14,15 @@ enum Role {
 }
 
 model User {
-  id           String         @id @default(uuid())
-  email        String         @unique
-  password     String?
-  role         Role           @default(USER)
-  googleId     String?        @unique
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String?
+  role          Role           @default(USER)
+  googleId      String?        @unique
   refreshTokens RefreshToken[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  inscriptions  Inscription[] /// Relation avec les inscriptions
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model RefreshToken {
@@ -30,5 +31,28 @@ model RefreshToken {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Event {
+  id           String        @id @default(uuid())
+  title        String
+  description  String?
+  date         DateTime
+  location     String
+  capacity     Int
+  createdAt    DateTime      @default(now())
+  inscriptions Inscription[]
+}
+
+model Inscription {
+  id        String   @id @default(uuid())
+  userId    String
+  eventId   String
+  firstName String
+  lastName  String
+  email     String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }

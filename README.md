@@ -19,24 +19,30 @@ L'application a pour objectif de permettre la publication des évènements et la
 ---
 
 ## Endpoints disponibles
+### _Les endpoint attendus pour le projet seront ajoutés aux endpoints déjà fournis par Kynetic_
+### Mais pour avoir "api" au debut de chaque requête comme demandé dans les consignes, j'ai ajouté la ligne
+```bash
+    app.setGlobalPrefix('api');
+```
+dans main.ts.
 
 ### Authentification
 
 | Méthode | Route | Description | Auth requise |
 |---|---|---|---|
-| POST | `/auth/register` | Créer un compte | Non |
-| POST | `/auth/login` | Se connecter | Non |
-| POST | `/auth/refresh` | Renouveler l'access token | Non |
-| POST | `/auth/logout` | Se déconnecter | Non |
-| GET | `/auth/google` | Lancer le flux Google OAuth | Non |
-| GET | `/auth/google/callback` | Callback Google OAuth | Non |
+| POST | `/api/auth/register` | Créer un compte | Non |
+| POST | `/api/auth/login` | Se connecter | Non |
+| POST | `/api/auth/refresh` | Renouveler l'access token | Non |
+| POST | `/api/auth/logout` | Se déconnecter | Non |
+| GET | `/api/auth/google` | Lancer le flux Google OAuth | Non |
+| GET | `/api/auth/google/callback` | Callback Google OAuth | Non |
 
 ### Utilisateurs
 
 | Méthode | Route | Description | Rôle requis |
 |---|---|---|---|
-| GET | `/users/:id` | Récupérer un utilisateur | Tout utilisateur connecté |
-| PATCH | `/users/:id/role` | Modifier le rôle d'un utilisateur | ADMIN uniquement |
+| GET | `/api/users/:id` | Récupérer un utilisateur | Tout utilisateur connecté |
+| PATCH | `/api/users/:id/role` | Modifier le rôle d'un utilisateur | ADMIN uniquement |
 
 Toutes les routes `/users` nécessitent le header :
 ```
@@ -47,6 +53,10 @@ Authorization: Bearer <access_token>
 
 ## Modèle de données
 ### Les modèles Events et Inscript seront ajouté aux modèles déjà existants de Kynetic
+### Pour la entre User et Inscription, j'ai ajouter cette ligne au modèle User:
+```bash
+  inscriptions  Inscription[]
+```
 
 ### User
 
@@ -92,11 +102,29 @@ Authorization: Bearer <access_token>
 | lastName | String | nom de l'utilisateur |
 | email | String | email unique |
 | registeredAt | DateTime | Date de d'inscription |
+
+#### Après l'ajout des modèles:
+```bash
+    npx prisma migrate dev --name ajout-event-inscription
+```
+#### Pour que ce soit pris en compte dans la base de données.
+
 ---
 
-## Sécurité
+## Stockage
+### La base de données est dans un conteneur dont les informations sont renseigné dans docker-compose.yml
+### Il s'agit d'une base de données PostgreSQL, mais toutes autre BD de type SQL peut être utilisée.
+### _Pour générer et migration le modèle de données vers la base de données:_
+```bash
+    npx prisma generate
+    docker compose up -d  /// Parce qu'on utilise un conteneur Docker pour la base de données PostgreSQL.
+    npx prisma migrate dev --name init
+```
 
+
+## Sécurité
 ### _Ce sont les même techniques de sécurité de Kynetic_
+
 - **Helmet** : headers de sécurité HTTP appliqués globalement
 - **Rate limiting** : 20 requêtes/minute sur toutes les routes, 10 requêtes/minute sur les routes d'authentification
 - **Validation** : tous les body de requête sont validés via `class-validator`, les champs non déclarés sont rejetés
