@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEventDto } from './dto/create-event.dto';
 
@@ -45,6 +45,12 @@ export class EventsService {
             },
             orderBy: { date: 'asc' },
         });
+    }
+
+    async findOne(id: string) {
+        const event = await this.prisma.event.findUnique({ where: { id } });
+        if (!event) throw new NotFoundException('Événement introuvable');
+        return event;
     }
 
 }
