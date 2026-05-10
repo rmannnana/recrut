@@ -48,4 +48,19 @@ export class InscriptionService {
             },
         });
     }
+
+    async findAll(eventId: string) {
+        await this.eventsService.findOne(eventId);
+
+        return this.prisma.inscription.findMany({
+            where: { eventId },
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                createdAt: true,
+            },
+        });
+    }
 }

@@ -71,7 +71,7 @@ Authorization: Bearer <access_token>
 |---|---|---|---|
 | POST | `/api/events/:id/register` | Inscrire un utilisateur à un event |
 | GET | `/api/events/:id/registrations` | lister les incrits à un évènement |
-
+#### La route pour lister les inscrits à un évènement est aussi réserver aux utilisateur ADMIN.
 ---
 
 ## Modèle de données
