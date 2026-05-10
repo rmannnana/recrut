@@ -63,4 +63,20 @@ export class InscriptionService {
             },
         });
     }
+
+    async delete(eventId: string, userId: string) {
+        await this.eventsService.findOne(eventId);
+        const inscription = await this.prisma.inscription.findFirst({
+            where: { eventId, userId },
+        });
+        if (!inscription) {
+            throw new HttpException(
+                { error: 'INSCRIPTION_NOT_FOUND', message: "Inscription n'a pas été trouvé." },
+                HttpStatus.NOT_FOUND,
+            );
+        }
+        return this.prisma.inscription.delete({
+            where: { id: inscription.id },
+        });
+    }
 }

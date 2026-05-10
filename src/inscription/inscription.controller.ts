@@ -1,4 +1,4 @@
-import { Controller, Post, Param, Body, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Param, Body, UseGuards, Get, Delete } from '@nestjs/common';
 import { InscriptionService } from './inscription.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
@@ -24,5 +24,12 @@ export class InscriptionController {
     @Roles(Role.ADMIN)
     findAll(@Param('id') eventId: string): Promise<{ id: string; firstName: string; lastName: string; email: string; createdAt: Date; }[]> {
         return this.inscriptionService.findAll(eventId);
+    }
+
+    // Controller
+    @Delete('registrations/:id')
+    @UseGuards(JwtAuthGuard)
+    delete(@Param('id') eventId: string, @CurrentUser() user: any) {
+        return this.inscriptionService.delete(eventId, user.id);
     }
 }
