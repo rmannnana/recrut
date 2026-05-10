@@ -28,14 +28,14 @@ L'application a pour objectif de permettre la publication des évènements et la
 
 ### Authentification
 
-| Méthode | Route | Description | Auth requise |
+| Méthode | Route | Description |
 |---|---|---|---|
-| POST | `/api/auth/register` | Créer un compte | Non |
-| POST | `/api/auth/login` | Se connecter | Non |
-| POST | `/api/auth/refresh` | Renouveler l'access token | Non |
-| POST | `/api/auth/logout` | Se déconnecter | Non |
-| GET | `/api/auth/google` | Lancer le flux Google OAuth | Non |
-| GET | `/api/auth/google/callback` | Callback Google OAuth | Non |
+| POST | `/api/auth/register` | Créer un compte |
+| POST | `/api/auth/login` | Se connecter |
+| POST | `/api/auth/refresh` | Renouveler l'access token |
+| POST | `/api/auth/logout` | Se déconnecter |
+| GET | `/api/auth/google` | Lancer le flux Google OAuth |
+| GET | `/api/auth/google/callback` | Callback Google OAuth |
 
 ### Utilisateurs
 
@@ -55,11 +55,22 @@ Authorization: Bearer <access_token>
 
 #### Il faut être ADMIN pour pouvoir créer un évènement (j'ai précisé dans \src\events\events.controller.ts)
 
-| Méthode | Route | Description | Auth requise |
+| Méthode | Route | Description |
 |---|---|---|---|
-| GET | `/api/events/` | Lister les events | Non |
-| POST | `/api/events/` | Créer un évènements | Non |
+| GET | `/api/events/` | Lister les events |
+| POST | `/api/events/` | Créer un évènements |
+| GET | `/api/events/:id` | Récup un évènement par son id |
+| PUT | `/api/events/:id` | Pour update un évènement |
+| DELETE | `/api/events/:id` | Supprimer un évènements |
 
+
+### Inscription
+#### Pour éviter la répétition, j'ai fais en sorte que les valeur lastName, firstName et email soient récupérées automatique quand l'utilisateur fait l'inscription (ajout du accessToken dans Postman): plus besoin de réécrire ces information dans la requête.
+
+| Méthode | Route | Description |
+|---|---|---|---|
+| POST | `/api/events/:id/register` | Inscrire un utilisateur à un event |
+| GET | `/api/events/:id/registrations` | lister les incrits à un évènement |
 
 ---
 
@@ -146,7 +157,8 @@ Authorization: Bearer <access_token>
 
 ---
 
-## Ajout du module events
+## Ajout du modules
+### Events
 
 Pour la création et la gestion d'évènements :
 
@@ -154,4 +166,12 @@ Pour la création et la gestion d'évènements :
 nest g module events
 nest g service events
 nest g controller events
+```
+
+### Inscription
+
+```bash
+nest g module inscription
+nest g service inscription
+nest g controller inscription
 ```

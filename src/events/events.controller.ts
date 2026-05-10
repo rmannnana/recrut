@@ -44,4 +44,5 @@ export class EventsController {
     remove(@Param('id') id: string) {
         return this.eventsService.remove(id);
     }
+
 }
